@@ -4,6 +4,7 @@
 //
 //  Created by Marco Del Giudice on 03/02/22.
 //
+import Foundation
 
 public class HTTPRequest: Requestable, Executable {
     

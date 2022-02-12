@@ -4,6 +4,7 @@
 //
 //  Created by Marco Del Giudice on 10/02/22.
 //
+import Foundation
 
 enum ValidatingError: Error {
     case unexpectedResponse

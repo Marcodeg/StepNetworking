@@ -5,7 +5,7 @@
 //  Created by Marco Del Giudice on 02/12/21.
 //
 
-import UIKit
+import Foundation
 
 public struct Empty: Decodable {}
 
