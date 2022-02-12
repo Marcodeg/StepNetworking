@@ -7,15 +7,6 @@
 
 import Foundation
 
-public enum RequestError: Error {
-    case invalidURL
-    case emptyData
-    case validatingError(underlyingError: Error)
-    // The received structure to represent the error (FailureResponse)
-    case requestError(failureResponse: Decodable, code: Int)
-    case undefinedError(underlyingError: Error)
-}
-
 protocol Executable where Self: Requestable {
     func execute<T: Decodable>(session: URLSession, validator: Validator) async -> Result<T, RequestError>
     func execute<T: Decodable, S: Decodable>(successResponse: T.Type, failureResponse: S.Type, session: URLSession, validator: Validator) async -> Result<T, RequestError>
@@ -68,4 +59,3 @@ extension Executable {
     }
     
 }
-

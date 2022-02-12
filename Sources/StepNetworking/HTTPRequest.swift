@@ -11,7 +11,7 @@ public class HTTPRequest: Requestable, Executable {
     internal(set) public var queryItems: [String: String]
     internal(set) public var body: Data?
     internal(set) public var headers: [String: String]
-    internal(set) public var url: String = ""
+    internal(set) public var url: String
     internal(set) public var pathParameters: [String]
     internal(set) public var method: HTTPMethod = .get
     internal(set) public var validator: RequestValidator
@@ -38,7 +38,11 @@ public class HTTPRequest: Requestable, Executable {
                                            maxRetryCount: validator.validator.maxRetryCount,
                                            retryDelay: validator.validator.retryDelay)
             { [weak self] in
-                guard let self = self else { return .failure(.invalidURL)}
+                
+                guard let self = self else {
+                    return .failure(.invalidURL)
+                }
+                
                 return await self.execute(session: session,
                                           validator: self.validator.validator)
             }.value
@@ -56,7 +60,11 @@ public class HTTPRequest: Requestable, Executable {
                                            maxRetryCount: validator.validator.maxRetryCount,
                                            retryDelay: validator.validator.retryDelay)
             { [weak self] in
-                guard let self = self else { return .failure(.invalidURL)}
+                
+                guard let self = self else {
+                    return .failure(.invalidURL)
+                }
+                
                 return await self.execute(successResponse: T.self,
                                           failureResponse: S.self,
                                           session: session,
@@ -69,14 +77,17 @@ public class HTTPRequest: Requestable, Executable {
             return .failure(.undefinedError(underlyingError: error))
         }
     }
-
+    
     public func perform(session: URLSession = URLSession.shared) async -> Result<Data, RequestError> {
         do {
             return try await Task.retrying(priority: .background,
                                            maxRetryCount: validator.validator.maxRetryCount,
                                            retryDelay: validator.validator.retryDelay)
             { [weak self] in
-                guard let self = self else { return .failure(.invalidURL)}
+                guard let self = self else {
+                    return .failure(.invalidURL)
+                }
+                
                 return await self.execute(session: session,
                                           validator: self.validator.validator)
             }.value
