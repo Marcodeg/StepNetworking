@@ -28,7 +28,7 @@ public protocol HTTPRequestBuilder {
 
 extension HTTPRequest {
     
-    public class Builder: HTTPRequestBuilderURL, HTTPRequestBuilderMethod, HTTPRequestBuilder {
+    class Builder: HTTPRequestBuilderURL, HTTPRequestBuilderMethod, HTTPRequestBuilder {
 
         private var url: String!
         private var method: HTTPMethod!
@@ -60,8 +60,8 @@ extension HTTPRequest {
             return self
         }
         
-        public func withBody<T: Encodable>(_ body: T) -> HTTPRequestBuilder {
-            self.body = encodeBody(body: body)
+        public func withBody<T: HTTPBody>(_ body: T) -> HTTPRequestBuilder {
+            self.body = body.encode()
             return self
         }
         
@@ -91,10 +91,14 @@ extension HTTPRequest {
                         cachePolicy: cachePolicy ?? .useProtocolCachePolicy)
         }
         
-        func encodeBody<T: Encodable>(body: T) -> Data? {
-            try? JSONEncoder().encode(body)
-        }
-        
     }
 
+}
+
+typealias HTTPBody = Encodable
+
+extension HTTPBody {
+    func encode() -> Data? {
+        try? JSONEncoder().encode(self)
+    }
 }
