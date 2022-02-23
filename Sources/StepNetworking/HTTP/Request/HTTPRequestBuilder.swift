@@ -16,7 +16,7 @@ public protocol HTTPRequestBuilderMethod {
 }
 
 public protocol HTTPRequestBuilder {
-    func withHeaders(_ headers: [String: String]) -> HTTPRequestBuilder
+    func withHeaders(_ headers: HTTPHeaders) -> HTTPRequestBuilder
     func withQueryItems(_ items: [String: String]) -> HTTPRequestBuilder
     func withBody<T: Encodable>(_ body: T) -> HTTPRequestBuilder
     func withPathParameters(_ parameters: [String]) -> HTTPRequestBuilder
@@ -32,7 +32,7 @@ extension HTTPRequest {
 
         private var url: String!
         private var method: HTTPMethod!
-        private var headers: [String: String]?
+        private var headers: HTTPHeaders?
         private var queryItems: [String: String]?
         private var body: Data?
         private var pathParameters: [String]?
@@ -50,7 +50,7 @@ extension HTTPRequest {
             return self
         }
         
-        public func withHeaders(_ headers: [String: String]) -> HTTPRequestBuilder {
+        public func withHeaders(_ headers: HTTPHeaders) -> HTTPRequestBuilder {
             self.headers = headers
             return self
         }
@@ -86,19 +86,11 @@ extension HTTPRequest {
                         headers: headers ?? [:],
                         queryItems: queryItems ?? [:],
                         pathParameters: pathParameters ?? [],
-                        validator: validator ?? .simple(acceptedStatusCode: 200..<300),
+                        validator: validator ?? .base(acceptedStatusCode: 200..<300),
                         body: body,
                         cachePolicy: cachePolicy ?? .useProtocolCachePolicy)
         }
         
     }
 
-}
-
-typealias HTTPBody = Encodable
-
-extension HTTPBody {
-    func encode() -> Data? {
-        try? JSONEncoder().encode(self)
-    }
 }

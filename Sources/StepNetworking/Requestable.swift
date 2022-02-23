@@ -13,7 +13,7 @@ protocol Requestable {
     
     var url: String { get set}
     var method: HTTPMethod { get set }
-    var headers: [String: String] { get set }
+    var headers: HTTPHeaders { get set }
     var queryItems: [String: String] { get set}
     var pathParameters: [String] { get set }
     var body: Data? { get set}
@@ -26,6 +26,7 @@ protocol Requestable {
 extension Requestable {
     
     func getURLQueryItems() -> [URLQueryItem] {
+        
         var queryItems: [URLQueryItem] = []
         self.queryItems.forEach {
             let urlQueryItem = URLQueryItem(name: $0.key, value: $0.value)
@@ -35,6 +36,7 @@ extension Requestable {
     }
     
     func getURLRequest() throws -> URLRequest {
+        
         guard var urlComponent = URLComponents(string: url) else {
             throw RequestError.invalidURL
         }
@@ -49,7 +51,7 @@ extension Requestable {
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
-        urlRequest.allHTTPHeaderFields = headers
+        urlRequest.allHTTPHeaderFields = headers.getHTTPHeaders()
         
         if method != .get {
             urlRequest.httpBody = body
