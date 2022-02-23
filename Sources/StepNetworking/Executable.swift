@@ -15,12 +15,12 @@ protocol Executable where Self: Requestable {
 
 extension Executable {
     
-    func execute<T: Decodable>(session: URLSession, validator: Validator) async -> Result<T, RequestError> {
+    func execute<T: HTTPResponse>(session: URLSession, validator: Validator) async -> Result<T, RequestError> {
         do {
             let urlRequest = try getURLRequest()
             let (data, response) = try await session.data(for: urlRequest)
             try validator.validate(response: response)
-            return .success(try decodeResponse(data))
+            return .success(try T.decode(data))
         } catch let validatingError as ValidatingError {
             return .failure(.validatingError(underlyingError: validatingError))
         } catch {
@@ -33,7 +33,7 @@ extension Executable {
             let urlRequest = try getURLRequest()
             let (data, response) = try await session.data(for: urlRequest)
             try validator.validate(response: response, data: data, failureResponse: S.self)
-            return .success(try decodeResponse(data))
+            return .success(try T.decode(data))
         } catch let validatingError as ValidatingError {
             return .failure(.validatingError(underlyingError: validatingError))
         } catch {
@@ -53,9 +53,4 @@ extension Executable {
             return .failure(.undefinedError(underlyingError: error))
         }
     }
-    
-    func decodeResponse<T: Decodable>(_ data: Data) throws -> T {
-        try JSONDecoder().decode(T.self, from: data)
-    }
-    
 }

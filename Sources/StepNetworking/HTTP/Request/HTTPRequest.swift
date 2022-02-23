@@ -6,7 +6,15 @@
 //
 import Foundation
 
-
+/// `HTTPRequest` .
+///
+/// Usage:
+///
+///     HTTPRequexst.builder
+///            ... // customize using builder methods
+///           .build()
+///           .perform()
+///
 public class HTTPRequest: Requestable, Executable {
     
     internal(set) public var queryItems: [String: String]

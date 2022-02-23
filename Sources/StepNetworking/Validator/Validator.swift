@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Validator: Validable {
+struct Validator: Validable {
     var acceptedStatusCode: Range<Int>
     var maxRetryCount: Int
     var retryDelay: TimeInterval
