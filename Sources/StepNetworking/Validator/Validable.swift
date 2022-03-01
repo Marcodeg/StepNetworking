@@ -32,13 +32,15 @@ extension Validable {
     }
     
     func validate<T: Decodable>(response: URLResponse, data: Data, failureResponse: T.Type) throws {
-        try validate(response: response)
-        
-        guard let failureResponse = try? JSONDecoder().decode(T.self, from: data) else {
-            throw ValidatingError.deneiedStatusCode(code: (response as? HTTPURLResponse)?.statusCode ?? 400)
+        guard let response = response as? HTTPURLResponse else {
+            throw ValidatingError.unexpectedResponse
         }
         
-        throw ValidatingError.requestError(failureResponse: failureResponse, code: (response as? HTTPURLResponse)?.statusCode ?? 400)
+        guard let failureResponse = try? JSONDecoder().decode(T.self, from: data) else {
+            throw ValidatingError.deneiedStatusCode(code: response.statusCode)
+        }
+        
+        throw ValidatingError.requestError(failureResponse: failureResponse, code: response.statusCode)
     }
     
 }
