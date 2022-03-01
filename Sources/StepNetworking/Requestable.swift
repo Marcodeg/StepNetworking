@@ -50,7 +50,7 @@ extension Requestable {
         pathParameters.forEach({url.appendPathComponent($0)})
         
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = method.rawValue
+        urlRequest.httpMethod = method.stringValue
         urlRequest.allHTTPHeaderFields = headers.getHTTPHeaders()
         
         if method != .get {

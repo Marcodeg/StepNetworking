@@ -9,7 +9,7 @@
 public typealias HTTPHeaders = [Header: String]
 
 /// Common HTTP headers.
-public enum Header: Equatable, Hashable {
+public enum Header: Hashable {
     /// Use when the header value you want is not in the list.
     case custom(String)
     /// Accept
@@ -113,7 +113,7 @@ public enum Header: Equatable, Hashable {
     /// WWW-Authenticate
     case wwwAuthenticate
     
-    public var requestString: String {
+    public var stringValue: String {
         switch self {
         case let .custom(val):
             return val
@@ -224,7 +224,7 @@ public enum Header: Equatable, Hashable {
 public extension HTTPHeaders {
     func getHTTPHeaders() -> [String: String] {
         var dictionary: [String: String] = [:]
-        self.forEach{dictionary[$0.key.requestString] = $0.value}
+        self.forEach{dictionary[$0.key.stringValue] = $0.value}
         return dictionary
     }
 }
