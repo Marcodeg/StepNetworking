@@ -36,6 +36,10 @@ extension Validable {
             throw ValidatingError.unexpectedResponse
         }
         
+        if acceptedStatusCode ~= response.statusCode {
+            return
+        }
+        
         guard let failureResponse = try? JSONDecoder().decode(T.self, from: data) else {
             throw ValidatingError.deneiedStatusCode(code: response.statusCode)
         }

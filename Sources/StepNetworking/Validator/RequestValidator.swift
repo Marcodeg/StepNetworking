@@ -6,7 +6,7 @@
 //
 import Foundation
 
-public enum RequestValidator {
+public enum RequestValidator: Equatable {
     case base(acceptedStatusCode: Range<Int>)
     case retry(acceptedStatusCode: Range<Int>, maxRetryCount: Int, delay: TimeInterval = 1)
     

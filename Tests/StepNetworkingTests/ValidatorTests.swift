@@ -47,6 +47,23 @@ class ValidatorTests: XCTestCase {
         }
     }
     
+    func test_simpleValidator_withFailureResponse_shouldSuccess() {
+        let response = HTTPURLResponse(url: URL(fileURLWithPath: ""), statusCode: 200, httpVersion: nil, headerFields: nil)
+        XCTAssertNotNil(response)
+        let failureResponse = FailureResponse(string: "axy", name: "Elon")
+        let data = try? JSONEncoder().encode(failureResponse)
+        XCTAssertNotNil(data)
+        
+        do {
+            try RequestValidator.base(acceptedStatusCode: 200..<220)
+                .validator
+                .validate(response: response!, data: data!, failureResponse: FailureResponse.self)
+        } catch {
+            XCTFail("\(error)")
+        }
+
+    }
+    
     func test_simpleValidator_withFailureResponse_shouldFail() {
         let response = HTTPURLResponse(url: URL(fileURLWithPath: ""), statusCode: 404, httpVersion: nil, headerFields: nil)
         XCTAssertNotNil(response)
