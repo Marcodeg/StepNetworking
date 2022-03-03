@@ -10,7 +10,7 @@ import Foundation
 ///
 /// Usage:
 ///
-///     HTTPRequexst.builder
+///     HTTPRequest.builder
 ///            ... // customize using builder methods
 ///           .build()
 ///           .perform()
