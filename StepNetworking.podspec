@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'StepNetworking'
-  s.version          = '0.1.1'
+  s.version          = '1.0.0'
   s.summary          = 'Easy async/await networking in swift'
   s.description      = 'Easy async/await http request in swift'
   s.homepage         = 'https://github.com/Marcodeg/StepNetworking'
