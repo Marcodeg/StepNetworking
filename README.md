@@ -2,6 +2,13 @@
 <h1 align="center">StepNetworking</h1>
 <p align="center">A lightweight and flexible solution to HTTP Requests in Swift.</p>
 
+<p align="center">
+    <img alt="Swift" src="https://img.shields.io/badge/Swift-5.3_5.4_5.5_5.6-orange?style=flat-square">
+    <img alt="Cocoapods" src="https://img.shields.io/cocoapods/v/StepNetworking?style=flat-square">
+    <img alt="SPM" src="https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square">
+    <img alt="Cocoapods" src="https://img.shields.io/cocoapods/l/StepNetworking?style=flat-square">
+</p><br/><br/>
+
 StepNetworking makes HTTP calls in Swift easy to create and read. It is built on async/await concurrency in Swift. 
 
 - [Installation](#installation)
