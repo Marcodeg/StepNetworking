@@ -1,17 +1,23 @@
-# StepNetworking
+<p align="center"><a href="https://github.com/Marcodeg/StepNetworking"><img src="https://user-images.githubusercontent.com/44085992/169148239-4254ec35-473f-46e0-8ada-e9b7edd3b3d5.png" alt="Gray shape shifter" height="60"/></a></p>
+<h1 align="center">StepNetworking</h1>
+<p align="center">A lightweight and flexible solution to HTTP Requests in Swift.</p>
 
-StepNetworking is a lightweight and flexible solution to HTTP Requests in Swift.
+StepNetworking makes HTTP calls in Swift easy to create and read. It is built on async/await concurrency in Swift. 
 
-The goal is to make HTTP calls in Swift easy to create and read. It is built on async/await concurrency in Swift. 
+- [Installation](#installation)
+- [Create a Request](#create-a-request)
+- [Execute a Request](#execute-a-request)
+- [Validate a Request](#validate-a-request)
+- [License](#license)
 
-## Getting Started
+
+
+## Installation
 
 ### Requirements
 
 * Deployment target iOS 13+
 * Swift 5+
-
-### Installation
 
 **CocoaPods**
 
@@ -40,7 +46,7 @@ At the top of the file where you'd like to use StepNetworking.
 import StepNetworking 
 ```
 
-**Create a Request**
+## Create a Request
 
 To create an HTTP request you have to compose it step by step through its builder.
 
@@ -53,7 +59,7 @@ HTTPRequest.builder
 ```
 These are the only mandatory steps, there are further possibilities to customize your request.
 
-**Execute a Request**
+## Execute a Request
 
 Executing a request is just as simple, you just need to call the perform method.
 
@@ -76,7 +82,8 @@ let result = await request.perform(successResponse: Response.self)
 let result = await request.perform(successResponse: Response.self, failureResponse: FailureResponse.self)
 ```
 
-**Validate a Request**
+## Validate a Request
+
 The request will be validated only if the status is between 200 and 300, but you can specify how to validate the request.
 
 ```swift
